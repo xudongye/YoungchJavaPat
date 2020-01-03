@@ -19,6 +19,7 @@ import org.apache.http.ssl.SSLContexts;
 import org.apache.http.ssl.TrustStrategy;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.*;
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
@@ -38,7 +39,7 @@ public class BeyondServiceImpl implements BeyondService {
     private static final Logger LOGGER = LoggerFactory.getLogger(BeyondServiceImpl.class);
 
     @Value("${domain}")
-    private static String domain;
+    private String domain;
 
     private final String APP_KEY = "6AF0062B-9C6D-4796-8760-803779CF7E48";
 
@@ -50,7 +51,7 @@ public class BeyondServiceImpl implements BeyondService {
         ApiReqModel reqModel = ReqCommonHelper.getCommonRequestModel(
                 BeyondConstant.BeyondMethod.Hotel_SearchHotelWithRoomPriceAndRoomCount.getName(), bizContent);
         ApiRespModel<HotelSearchResponseModel> respModel = handleApiResult(reqModel);
-        LOGGER.info("beyond: call on method hotel with room price and count,result code {}", respModel.Code);
+        LOGGER.info("beyond: call on method hotel with room price and count,result code {} message {}", respModel.Code, respModel.Message);
         return respModel;
 
     }
@@ -63,7 +64,7 @@ public class BeyondServiceImpl implements BeyondService {
                 BeyondConstant.BeyondMethod.Hotel_GetOrgInfo.getName(), bizContent);
 
         ApiRespModel<HotelInfoResponseModel> respModel = handleApiResult(reqModel);
-        LOGGER.info("beyond: call on method with hotel info , result code {}", respModel.Code);
+        LOGGER.info("beyond: call on method with hotel info , result code {} message {}", respModel.Code, respModel.Message);
         return respModel;
 
     }
