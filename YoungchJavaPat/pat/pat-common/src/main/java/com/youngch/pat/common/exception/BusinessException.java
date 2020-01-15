@@ -1,4 +1,4 @@
-package com.youngch.pat.common.base.exception;
+package com.youngch.pat.common.exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

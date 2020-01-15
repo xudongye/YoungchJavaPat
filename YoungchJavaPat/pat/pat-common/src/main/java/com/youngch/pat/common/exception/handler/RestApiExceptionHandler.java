@@ -1,6 +1,6 @@
-package com.youngch.pat.common.base.exception.handler;
+package com.youngch.pat.common.exception.handler;
 
-import com.youngch.pat.common.base.exception.BusinessException;
+import com.youngch.pat.common.exception.BusinessException;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.HandlerExceptionResolver;
 import org.springframework.web.servlet.ModelAndView;

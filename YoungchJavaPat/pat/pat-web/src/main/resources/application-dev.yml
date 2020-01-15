@@ -4,6 +4,8 @@ domain: dev.youngch-cloud.com
 spring:
   application:
       name: pat
+  mybatis:
+
   # MySQL
   datasource:
       url: jdbc:mysql://dev.youngch-cloud.com:3306/pat?useUnicode=true&characterEncoding=utf8

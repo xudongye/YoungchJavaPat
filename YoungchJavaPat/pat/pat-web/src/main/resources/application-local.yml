@@ -6,7 +6,7 @@ spring:
     name: pat
   # MySQL
   datasource:
-    url: jdbc:mysql://127.0.0.1:3306/pat?useUnicode=true&characterEncoding=utf8
+    url: jdbc:mysql://127.0.0.1:3306/learn?useUnicode=true&characterEncoding=utf8
     #url: jdbc:mysql://localhost:3306/pat?useSSL=true&useUnicode=true&characterEncoding=utf8
     username: root
     password: root

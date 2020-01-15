@@ -1,6 +1,6 @@
 package com.youngch.pat.beyond.constant;
 
-import com.youngch.pat.common.base.utils.enums.EnumName;
+import com.youngch.pat.common.utils.enums.EnumName;
 
 public class BeyondConstant {
 

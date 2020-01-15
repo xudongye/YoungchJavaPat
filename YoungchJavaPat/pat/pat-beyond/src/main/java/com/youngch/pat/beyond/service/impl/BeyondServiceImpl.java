@@ -15,6 +15,7 @@ import com.youngch.pat.beyond.model.response.HotelInfoResponseModel;
 import com.youngch.pat.beyond.model.response.HotelRoomStatusResponseModel;
 import com.youngch.pat.beyond.model.response.HotelSearchResponseModel;
 import com.youngch.pat.beyond.service.BeyondService;
+import com.youngch.pat.common.exception.BusinessException;
 import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
@@ -78,23 +79,27 @@ public class BeyondServiceImpl implements BeyondService {
         HotelRoomStatusRequestModel requestModel = new HotelRoomStatusRequestModel();
         requestModel.setOrgId(1L);
         requestModel.setRoomNos(new String[]{"801", "802", "803"});
-        ApiRespModel<HotelRoomStatusResponseModel> respModel = onRoomStatus(requestModel);
-        if (respModel.Code.equals("10000")) {
-            List<HotelRoomStatusResponseModel> responseModels = respModel.Data;
-            for (HotelRoomStatusResponseModel responseModel : responseModels) {
-                switch (responseModel.getStatus()) {
-                    case "VD":
-                        LOGGER.info("房间{}状态为空脏", responseModel.getRoomNo());
-                    case "VC":
-                        LOGGER.info("房间{}状态为空净", responseModel.getRoomNo());
-                    case "OOO":
-                        LOGGER.info("房间{}状态为维修房", responseModel.getRoomNo());
-                    case "OD":
-                        LOGGER.info("房间{}状态为住脏", responseModel.getRoomNo());
-                    case "OC":
-                        LOGGER.info("房间{}状态为住净", responseModel.getRoomNo());
+        try {
+            ApiRespModel<HotelRoomStatusResponseModel> respModel = onRoomStatus(requestModel);
+            if (respModel.Code.equals("10000")) {
+                List<HotelRoomStatusResponseModel> responseModels = respModel.Data;
+                for (HotelRoomStatusResponseModel responseModel : responseModels) {
+                    switch (responseModel.getStatus()) {
+                        case "VD":
+                            LOGGER.info("房间{}状态为空脏", responseModel.getRoomNo());
+                        case "VC":
+                            LOGGER.info("房间{}状态为空净", responseModel.getRoomNo());
+                        case "OOO":
+                            LOGGER.info("房间{}状态为维修房", responseModel.getRoomNo());
+                        case "OD":
+                            LOGGER.info("房间{}状态为住脏", responseModel.getRoomNo());
+                        case "OC":
+                            LOGGER.info("房间{}状态为住净", responseModel.getRoomNo());
+                    }
                 }
             }
+        } catch (BusinessException be) {
+            LOGGER.error(be.getErrorMsg());
         }
     }
 

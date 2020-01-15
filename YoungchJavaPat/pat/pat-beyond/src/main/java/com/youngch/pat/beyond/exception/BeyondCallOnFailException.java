@@ -1,6 +1,6 @@
 package com.youngch.pat.beyond.exception;
 
-import com.youngch.pat.common.base.exception.BusinessException;
+import com.youngch.pat.common.exception.BusinessException;
 
 public class BeyondCallOnFailException extends BusinessException {
     @Override

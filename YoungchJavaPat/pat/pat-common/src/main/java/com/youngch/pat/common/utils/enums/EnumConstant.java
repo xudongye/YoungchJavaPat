@@ -1,4 +1,4 @@
-package com.youngch.pat.common.base.utils.enums;
+package com.youngch.pat.common.utils.enums;
 
 import java.util.HashMap;
 import java.util.Map;
