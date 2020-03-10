@@ -10,7 +10,7 @@ spring:
     #url: jdbc:mysql://localhost:3306/pat?useSSL=true&useUnicode=true&characterEncoding=utf8
     username: root
     password: root
-    driver-class-name: com.mysql.jdbc.Driver
+    driver-class-name: com.mysql.cj.jdbc.Driver
     type: com.alibaba.druid.pool.DruidDataSource
 
     #连接池的配置信息
@@ -32,6 +32,12 @@ spring:
     # Druid Login Params
     loginUserName: admin
     loginPassword: Hello@1234
+
+#mybatis配置
+mybatis:
+  typeAliasesPackage: com.youngch.pat.entity
+  mapperLocations: classpath:mapper/*.xml
+  #configLocation: classpath:/mybatis-config.xml
 
   # Logback
   log:

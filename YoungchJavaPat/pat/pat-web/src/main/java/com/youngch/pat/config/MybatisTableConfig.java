@@ -63,8 +63,8 @@ public class MybatisTableConfig {
         SqlSessionFactoryBean sqlSessionFactoryBean = new SqlSessionFactoryBean();
         sqlSessionFactoryBean.setDataSource(dataSource());
         PathMatchingResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();
-        sqlSessionFactoryBean.setMapperLocations(resolver.getResources("classpath*:mapper/*/*.xml"));
-        sqlSessionFactoryBean.setTypeAliasesPackage("com.youngch.pat.domain.entity.*");
-            return sqlSessionFactoryBean;
+        sqlSessionFactoryBean.setMapperLocations(resolver.getResources("classpath*:com/gitee/sunchenbin/mybatis/actable/mapping/*/*.xml"));
+        sqlSessionFactoryBean.setTypeAliasesPackage("com.youngch.pat.entity.*");
+        return sqlSessionFactoryBean;
     }
 }
