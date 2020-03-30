@@ -43,8 +43,7 @@ public class BeyondServiceImpl implements BeyondService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(BeyondServiceImpl.class);
 
-    @Value("${domain}")
-    private String domain;
+    private final String DOMAIN = "aihotel";
 
     private final String APP_KEY = "6AF0062B-9C6D-4796-8760-803779CF7E48";
 
@@ -122,7 +121,7 @@ public class BeyondServiceImpl implements BeyondService {
         SignHelper.Sign(reqModel, APP_KEY);
 
         HttpHeaders headers = new HttpHeaders();
-        headers.add("domain", domain);
+        headers.add("domain", DOMAIN);
         headers.setContentType(MediaType.APPLICATION_JSON_UTF8);
         try {
             java.net.URI uri = new URI(URI);
