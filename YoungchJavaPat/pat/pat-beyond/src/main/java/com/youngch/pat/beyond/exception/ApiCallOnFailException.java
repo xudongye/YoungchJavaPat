@@ -2,7 +2,11 @@ package com.youngch.pat.beyond.exception;
 
 import com.youngch.pat.common.exception.BusinessException;
 
-public class BeyondCallOnFailException extends BusinessException {
+/**
+ * @author: yexudong
+ * @Date: 2020/4/8 14:18
+ */
+public class ApiCallOnFailException extends BusinessException {
     @Override
     public String getErrorCode() {
         return null;
@@ -10,6 +14,6 @@ public class BeyondCallOnFailException extends BusinessException {
 
     @Override
     public String getErrorMsg() {
-        return "别样红接口访问失败！";
+        return "接口远程调用失败！";
     }
 }

@@ -1,14 +1,16 @@
-package com.youngch.pat.beyond.model.request;
+package com.youngch.pat.beyond.model.request.hotel;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
+import java.util.Date;
+
 @Data
 public class HotelSearchRequestModel {
     @JsonProperty("ArriveTime")
-    private String ArriveTime;
+    private Date ArriveTime;
     @JsonProperty("DepartureTime")
-    private String DepartureTime;
+    private Date DepartureTime;
     @JsonProperty("HotelIds")
     private long[] HotelIds;
     @JsonProperty("HotelName")

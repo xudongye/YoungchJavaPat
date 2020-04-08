@@ -11,7 +11,7 @@ public class ApiRespModel<T> {
     @JsonProperty("Message")
     public String Message;
     @JsonProperty("SubCode")
-    public Long SubCode;
+    public String SubCode;
     @JsonProperty("SubMessage")
     public String SubMessage;
     @JsonProperty("Data")

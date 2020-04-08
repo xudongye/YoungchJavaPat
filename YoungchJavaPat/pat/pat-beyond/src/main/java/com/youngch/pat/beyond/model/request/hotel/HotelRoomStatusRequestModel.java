@@ -1,4 +1,4 @@
-package com.youngch.pat.beyond.model.request;
+package com.youngch.pat.beyond.model.request.hotel;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;

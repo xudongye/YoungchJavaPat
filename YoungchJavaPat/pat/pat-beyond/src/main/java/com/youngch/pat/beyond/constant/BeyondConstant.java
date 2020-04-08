@@ -8,7 +8,8 @@ public class BeyondConstant {
         Hotel_SearchHotelWithRoomPriceAndRoomCount(1, "Hotel.SearchHotelWithRoomPriceAndRoomCount"),//查询酒店房量房价
         Hotel_GetOrgInfo(2, "Hotel.GetOrgInfo"),//查询某个酒店信息
         Hotel_GetOrgs(3, "Hotel.GetOrgs"),//查询酒店信息
-        Hotel_GetRoomStatus(4, "Hotel.GetRoomStatus");
+        Hotel_GetRoomStatus(4, "Hotel.GetRoomStatus"),
+        Order_Add(5, "Order.Add");
 
         private int code;
 
@@ -42,6 +43,33 @@ public class BeyondConstant {
         private String name;
 
         RoomStatus(int code, String name) {
+            this.code = code;
+            this.name = name;
+        }
+
+        @Override
+        public int getCode() {
+            return code;
+        }
+
+        @Override
+        public String getName() {
+            return name;
+        }
+    }
+
+    public enum CheckInType implements EnumName {
+        Normal(1, "Normal"),
+        LongTerm(2, "LongTerm"),
+        Trip(3, "Trip"),
+        Conference(4, "Conference"),
+        Free(5, "Free");
+
+        private int code;
+
+        private String name;
+
+        CheckInType(int code, String name) {
             this.code = code;
             this.name = name;
         }
