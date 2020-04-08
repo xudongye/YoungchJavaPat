@@ -48,7 +48,7 @@ public class BeyondHotelSearchController {
 
     @ApiOperation(value = "别样红搜索酒店基本信息请求接口", httpMethod = "POST")
     @RequestMapping(value = "/hotelInfo", method = RequestMethod.POST)
-    public ResponseEntity<Map<String, Object>> searchHotel(HttpServletRequest request,
+    public ResponseEntity<Map<String, Object>> searchInfo(HttpServletRequest request,
                                                            @RequestBody HotelInfoRequestModel requestModel) {
         Map<String, Object> responseBody = new HashMap<>();
         ApiRespModel<HotelInfoResponseModel> responseModel = beyondService.onHotelInfo(requestModel);

@@ -22,7 +22,7 @@ public class AddOrderRequestModel {
     @JsonProperty("EstimatedDepartureTime")
     private Date EstimatedDepartureTime;
     @JsonProperty("RoomPlans")
-    private List<RoomCountModel> RoomPlans;
+    private RoomCountModel[] RoomPlans;
     @JsonProperty("MemberId")
     private Long MemberId;
     @JsonProperty("ContractId")
@@ -30,7 +30,7 @@ public class AddOrderRequestModel {
     @JsonProperty("SalerId")
     private String SalerId;
     @JsonProperty("Liaisons")
-    private List<LiaisonModel> Liaisons;
+    private LiaisonModel[] Liaisons;
     @JsonProperty("Locked")
     private Boolean Locked;
     @JsonProperty("ExpireKeepTime")
@@ -42,7 +42,7 @@ public class AddOrderRequestModel {
     @JsonProperty("Memo")
     private String Memo;
     @JsonProperty("ServiceItems")
-    private List<OrderServiceItemModel> ServiceItems;
+    private OrderServiceItemModel[] ServiceItems;
     @JsonProperty("OrderSn")
     private String OrderSn;
     @JsonProperty("OpenId")

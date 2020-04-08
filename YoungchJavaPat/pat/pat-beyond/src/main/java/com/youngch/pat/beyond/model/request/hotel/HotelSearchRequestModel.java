@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
 import java.util.Date;
+import java.util.List;
 
 @Data
 public class HotelSearchRequestModel {
@@ -11,10 +12,10 @@ public class HotelSearchRequestModel {
     private Date ArriveTime;
     @JsonProperty("DepartureTime")
     private Date DepartureTime;
-    @JsonProperty("HotelIds")
-    private long[] HotelIds;
-    @JsonProperty("HotelName")
-    private String HotelName;
+    @JsonProperty("OrgIds")
+    private Long[] OrgIds;
+    @JsonProperty("OrgName")
+    private String OrgName;
     @JsonProperty("OrgSns")
     private String[] OrgSns;
     @JsonProperty("CityId")
@@ -39,9 +40,9 @@ public class HotelSearchRequestModel {
     private String CheckinType;
     @JsonProperty("RoomTypeIds")
     private String[] RoomTypeIds;
-    @JsonProperty("MemberLevels")
+    @JsonProperty("RoomStatuses")
     private String[] RoomStatuses;
-    @JsonProperty("")
+    @JsonProperty("MemberLevels")
     private String[] MemberLevels;
     @JsonProperty("PhysicalRoomTypeOnly")
     private boolean PhysicalRoomTypeOnly;

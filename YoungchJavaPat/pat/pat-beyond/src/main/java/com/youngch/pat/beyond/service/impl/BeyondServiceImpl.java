@@ -165,6 +165,7 @@ public class BeyondServiceImpl implements BeyondService {
             RestTemplate template = new RestTemplate(factory);
             responseMessage = template.exchange(requestEntity, String.class);
         } catch (Exception e) {
+            LOGGER.error(e.getMessage());
             throw new ApiCallOnFailException();
         }
         LOGGER.info("beyond api result: {}", responseMessage.getBody());
