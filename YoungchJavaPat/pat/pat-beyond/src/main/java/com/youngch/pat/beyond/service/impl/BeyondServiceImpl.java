@@ -1,6 +1,7 @@
 package com.youngch.pat.beyond.service.impl;
 
 import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.youngch.pat.beyond.constant.BeyondConstant;
 import com.youngch.pat.beyond.exception.BeyondCallOnFailException;
 import com.youngch.pat.beyond.hepler.JsonHelper;
@@ -43,25 +44,28 @@ public class BeyondServiceImpl implements BeyondService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(BeyondServiceImpl.class);
 
-    private final String DOMAIN = "aihotel";
+    private final String DOMAIN = "pms";
 
-    private final String APP_KEY = "6AF0062B-9C6D-4796-8760-803779CF7E48";
+    private final String APP_KEY = "86O4K6YG5U2N6TDR52TVSE2R6AW5";
 
-    private final String URI = "https://cpmsinterface.test.beyondh.com:7898/";
+    private final String URI = "http://pms.beyondh.com:7897";
 
     @Override
-    public ApiRespModel<HotelSearchResponseModel> onSearchHotel(HotelSearchRequestModel requestModel) {
+    public ApiRespModel<List<HotelSearchResponseModel>> onSearchHotel(HotelSearchRequestModel requestModel) {
         String bizContent = JsonHelper.SerializeObject(requestModel);
         ApiReqModel reqModel = ReqCommonHelper.getCommonRequestModel(
                 BeyondConstant.BeyondMethod.Hotel_SearchHotelWithRoomPriceAndRoomCount.getName(), bizContent);
-        ApiRespModel<HotelSearchResponseModel> respModel = handleApiResult(reqModel);
+        ApiRespModel<List<HotelSearchResponseModel>> respModel = handleApiResult(reqModel);
         LOGGER.info("酒店列表: call on method hotel with room price and count,result code {} message {}", respModel.Code, respModel.Message);
         return respModel;
 
     }
 
     @Override
-    public ApiRespModel<HotelInfoResponseModel> onHotelInfo(HotelInfoRequestModel requestModel) {
+    public ApiRespModel<HotelInfoResponseModel> onHotelInfo(Long OrgId) {
+
+        HotelInfoRequestModel requestModel = new HotelInfoRequestModel();
+        requestModel.setOrgId(OrgId);
         String bizContent = JsonHelper.SerializeObject(requestModel);
 
         ApiReqModel reqModel = ReqCommonHelper.getCommonRequestModel(
@@ -73,53 +77,57 @@ public class BeyondServiceImpl implements BeyondService {
 
     }
 
-    @Scheduled(cron = "0 */1 * * * ?")
+    //    @Scheduled(cron = "0 */1 * * * ?")
     public void pollRoomStatus() {
         HotelRoomStatusRequestModel requestModel = new HotelRoomStatusRequestModel();
-        requestModel.setOrgId(1L);
-        requestModel.setRoomNos(new String[]{"801", "802", "803"});
+        requestModel.setOrgId(288733476028418L);
+        requestModel.setRoomNos(new String[]{"0115"});
         try {
-            ApiRespModel<HotelRoomStatusResponseModel> respModel = onRoomStatus(requestModel);
-            if (respModel.Code.equals("10000")) {
-                List<HotelRoomStatusResponseModel> responseModels = respModel.Data;
-                for (HotelRoomStatusResponseModel responseModel : responseModels) {
-                    switch (responseModel.getStatus()) {
-                        case "VD":
-                            LOGGER.info("房间{}状态为空脏", responseModel.getRoomNo());
-                        case "VC":
-                            LOGGER.info("房间{}状态为空净", responseModel.getRoomNo());
-                        case "OOO":
-                            LOGGER.info("房间{}状态为维修房", responseModel.getRoomNo());
-                        case "OD":
-                            LOGGER.info("房间{}状态为住脏", responseModel.getRoomNo());
-                        case "OC":
-                            LOGGER.info("房间{}状态为住净", responseModel.getRoomNo());
-                    }
+            ApiRespModel<List<HotelRoomStatusResponseModel>> respModel = onRoomStatus(requestModel);
+
+            List<HotelRoomStatusResponseModel> responseModels =
+                    new ObjectMapper().convertValue(respModel.Data, new TypeReference<List<HotelRoomStatusResponseModel>>() {
+                    });
+            for (HotelRoomStatusResponseModel responseModel : responseModels) {
+                switch (responseModel.getStatus()) {
+                    case "VD":
+                        LOGGER.info("房间{}状态为空脏", responseModel.getRoomNo());
+                        break;
+                    case "VC":
+                        LOGGER.info("房间{}状态为空净", responseModel.getRoomNo());
+                        break;
+                    case "OOO":
+                        LOGGER.info("房间{}状态为维修房", responseModel.getRoomNo());
+                        break;
+                    case "OD":
+                        LOGGER.info("房间{}状态为住脏", responseModel.getRoomNo());
+                        break;
+                    case "OC":
+                        LOGGER.info("房间{}状态为住净", responseModel.getRoomNo());
+                        break;
                 }
             }
+
         } catch (BusinessException be) {
             LOGGER.error(be.getErrorMsg());
         }
     }
 
     @Override
-    public ApiRespModel<HotelRoomStatusResponseModel> onRoomStatus(HotelRoomStatusRequestModel requestModel) {
+    public ApiRespModel<List<HotelRoomStatusResponseModel>> onRoomStatus(HotelRoomStatusRequestModel requestModel) {
         String bizContent = JsonHelper.SerializeObject(requestModel);
         ApiReqModel reqModel = ReqCommonHelper.getCommonRequestModel(
                 BeyondConstant.BeyondMethod.Hotel_GetRoomStatus.getName(), bizContent);
 
-        ApiRespModel<HotelRoomStatusResponseModel> respModel = handleApiResult(reqModel);
+        ApiRespModel<List<HotelRoomStatusResponseModel>> respModel = handleApiResult(reqModel);
 
         LOGGER.info("房态查询: call on method with hotel room status, result code {} message {}", respModel.Code, respModel.Message);
 
         return respModel;
     }
 
-    private <E> ApiRespModel<E> handleApiResult(ApiReqModel reqModel) {
-        ApiRespModel<E> result = new ApiRespModel<>();
-
+    private <T> ApiRespModel<T> handleApiResult(ApiReqModel reqModel) {
         SignHelper.Sign(reqModel, APP_KEY);
-
         HttpHeaders headers = new HttpHeaders();
         headers.add("domain", DOMAIN);
         headers.setContentType(MediaType.APPLICATION_JSON_UTF8);
@@ -150,9 +158,9 @@ public class BeyondServiceImpl implements BeyondService {
             RestTemplate template = new RestTemplate(factory);
             ResponseEntity<String> responseMessage = template.exchange(requestEntity, String.class);
             LOGGER.info("beyond api result: {}", responseMessage.getBody());
-            result = JsonHelper.DeserializeObject(responseMessage.getBody(), new TypeReference<ApiRespModel<HotelSearchResponseModel>>() {
+            ApiRespModel<T> result = JsonHelper.DeserializeObject(responseMessage.getBody(), new TypeReference<ApiRespModel<T>>() {
             });
-            if (result != null && "10000".equals(result.Code)) {
+            if (result != null && 10000 == result.Code) {
                 return result;
             }
         } catch (Exception e) {

@@ -8,11 +8,13 @@ import com.youngch.pat.beyond.model.response.HotelInfoResponseModel;
 import com.youngch.pat.beyond.model.response.HotelRoomStatusResponseModel;
 import com.youngch.pat.beyond.model.response.HotelSearchResponseModel;
 
+import java.util.List;
+
 public interface BeyondService {
 
-    ApiRespModel<HotelSearchResponseModel> onSearchHotel(HotelSearchRequestModel requestModel);
+    ApiRespModel<List<HotelSearchResponseModel>> onSearchHotel(HotelSearchRequestModel requestModel);
 
-    ApiRespModel<HotelInfoResponseModel> onHotelInfo(HotelInfoRequestModel requestModel);
+    ApiRespModel<HotelInfoResponseModel> onHotelInfo(Long OrgId);
 
-    ApiRespModel<HotelRoomStatusResponseModel> onRoomStatus(HotelRoomStatusRequestModel requestModel);
+    ApiRespModel<List<HotelRoomStatusResponseModel>> onRoomStatus(HotelRoomStatusRequestModel requestModel);
 }

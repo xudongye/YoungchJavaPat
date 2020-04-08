@@ -13,7 +13,7 @@ public class ReqCommonHelper {
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         String timeStamp = format.format(now);
         ApiReqModel responseModel = new ApiReqModel();
-        responseModel.setChannelKey("Web");
+        responseModel.setChannelKey("INTERFACE");
         responseModel.setSignType("MD5");
         responseModel.setFormat("json");
         responseModel.setCharset("utf-8");

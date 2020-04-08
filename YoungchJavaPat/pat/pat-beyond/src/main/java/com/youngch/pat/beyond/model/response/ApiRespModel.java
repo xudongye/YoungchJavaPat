@@ -6,13 +6,14 @@ import lombok.Data;
 import java.util.List;
 @Data
 public class ApiRespModel<T> {
-    public String Code;
-
+    @JsonProperty("Code")
+    public Long Code;
+    @JsonProperty("Message")
     public String Message;
-
-    public String SubCode;
-
+    @JsonProperty("SubCode")
+    public Long SubCode;
+    @JsonProperty("SubMessage")
     public String SubMessage;
-
-    public List<T> Data;
+    @JsonProperty("Data")
+    public T Data;
 }

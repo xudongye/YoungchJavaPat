@@ -11,7 +11,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @EnableSwagger2
 @EnableScheduling
 @EnableCaching
-@ComponentScan({"com.youngch.pat"})
+@ComponentScan({"com.youngch.*"})
 @MapperScan("com.youngch.pat.dao")
 @SpringBootApplication
 public class PatApplication {
