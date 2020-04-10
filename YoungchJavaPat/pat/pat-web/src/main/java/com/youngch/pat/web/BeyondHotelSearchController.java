@@ -1,11 +1,11 @@
 package com.youngch.pat.web;
 
 import com.youngch.pat.beyond.model.request.hotel.HotelInfoRequestModel;
+import com.youngch.pat.beyond.model.request.hotel.HotelRoomStatusRequestModel;
 import com.youngch.pat.beyond.model.request.hotel.HotelSearchRequestModel;
 import com.youngch.pat.beyond.model.request.order.AddOrderRequestModel;
-import com.youngch.pat.beyond.model.response.ApiRespModel;
-import com.youngch.pat.beyond.model.response.HotelInfoResponseModel;
-import com.youngch.pat.beyond.model.response.HotelSearchResponseModel;
+import com.youngch.pat.beyond.model.request.order.CheckInRequestModel;
+import com.youngch.pat.beyond.model.response.*;
 import com.youngch.pat.beyond.service.BeyondService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -40,7 +40,7 @@ public class BeyondHotelSearchController {
     public ResponseEntity<Map<String, Object>> searchHotel(HttpServletRequest request,
                                                            @RequestBody HotelSearchRequestModel requestModel) {
         Map<String, Object> responseBody = new HashMap<>();
-        ApiRespModel<List<HotelSearchResponseModel>> responseModel = beyondService.onSearchHotel(requestModel);
+        ApiRespModel responseModel = beyondService.onSearchHotel(requestModel);
         responseBody.put("success", true);
         responseBody.put("data", responseModel);
         return new ResponseEntity<>(responseBody, HttpStatus.CREATED);
@@ -49,9 +49,9 @@ public class BeyondHotelSearchController {
     @ApiOperation(value = "别样红搜索酒店基本信息请求接口", httpMethod = "POST")
     @RequestMapping(value = "/hotelInfo", method = RequestMethod.POST)
     public ResponseEntity<Map<String, Object>> searchInfo(HttpServletRequest request,
-                                                           @RequestBody HotelInfoRequestModel requestModel) {
+                                                          @RequestBody HotelInfoRequestModel requestModel) {
         Map<String, Object> responseBody = new HashMap<>();
-        ApiRespModel<HotelInfoResponseModel> responseModel = beyondService.onHotelInfo(requestModel);
+        ApiRespModel responseModel = beyondService.onHotelInfo(requestModel);
         responseBody.put("success", true);
         responseBody.put("data", responseModel);
         return new ResponseEntity<>(responseBody, HttpStatus.OK);
@@ -62,7 +62,29 @@ public class BeyondHotelSearchController {
     public ResponseEntity<Map<String, Object>> addOrder(HttpServletRequest request,
                                                         @RequestBody AddOrderRequestModel requestModel) {
         Map<String, Object> responseBody = new HashMap<>();
-        ApiRespModel<String> responseModel = beyondService.onAddOrder(requestModel);
+        ApiRespModel responseModel = beyondService.onAddOrder(requestModel);
+        responseBody.put("success", true);
+        responseBody.put("data", responseModel);
+        return new ResponseEntity<>(responseBody, HttpStatus.OK);
+    }
+
+    @ApiOperation(value = "别样红搜索酒店房态查询", httpMethod = "POST")
+    @RequestMapping(value = "/roomStatus", method = RequestMethod.POST)
+    public ResponseEntity<Map<String, Object>> roomStatus(HttpServletRequest request,
+                                                          @RequestBody HotelRoomStatusRequestModel requestModel) {
+        Map<String, Object> responseBody = new HashMap<>();
+        ApiRespModel responseModel = beyondService.onRoomStatus(requestModel);
+        responseBody.put("success", true);
+        responseBody.put("data", responseModel);
+        return new ResponseEntity<>(responseBody, HttpStatus.OK);
+    }
+
+    @ApiOperation(value = "别样红搜索酒店入住查询", httpMethod = "POST")
+    @RequestMapping(value = "/checkInQuery", method = RequestMethod.POST)
+    public ResponseEntity<Map<String, Object>> checkInQuery(HttpServletRequest request,
+                                                            @RequestBody CheckInRequestModel requestModel) {
+        Map<String, Object> responseBody = new HashMap<>();
+        ApiRespModel responseModel = beyondService.onCheckInQuery(requestModel);
         responseBody.put("success", true);
         responseBody.put("data", responseModel);
         return new ResponseEntity<>(responseBody, HttpStatus.OK);

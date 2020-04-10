@@ -3,9 +3,8 @@ package com.youngch.pat.beyond.model.response;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
-import java.util.List;
 @Data
-public class ApiRespModel<T> {
+public class ApiRespModel {
     @JsonProperty("Code")
     public Long Code;
     @JsonProperty("Message")
@@ -15,5 +14,5 @@ public class ApiRespModel<T> {
     @JsonProperty("SubMessage")
     public String SubMessage;
     @JsonProperty("Data")
-    public T Data;
+    public Object Data;
 }

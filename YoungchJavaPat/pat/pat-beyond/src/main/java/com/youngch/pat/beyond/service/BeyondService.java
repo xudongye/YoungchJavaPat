@@ -4,20 +4,20 @@ import com.youngch.pat.beyond.model.request.hotel.HotelInfoRequestModel;
 import com.youngch.pat.beyond.model.request.hotel.HotelRoomStatusRequestModel;
 import com.youngch.pat.beyond.model.request.hotel.HotelSearchRequestModel;
 import com.youngch.pat.beyond.model.request.order.AddOrderRequestModel;
-import com.youngch.pat.beyond.model.response.ApiRespModel;
-import com.youngch.pat.beyond.model.response.HotelInfoResponseModel;
-import com.youngch.pat.beyond.model.response.HotelRoomStatusResponseModel;
-import com.youngch.pat.beyond.model.response.HotelSearchResponseModel;
+import com.youngch.pat.beyond.model.request.order.CheckInRequestModel;
+import com.youngch.pat.beyond.model.response.*;
 
 import java.util.List;
 
 public interface BeyondService {
 
-    ApiRespModel<List<HotelSearchResponseModel>> onSearchHotel(HotelSearchRequestModel requestModel);
+    ApiRespModel onSearchHotel(HotelSearchRequestModel requestModel);
 
-    ApiRespModel<HotelInfoResponseModel> onHotelInfo(HotelInfoRequestModel requestModel);
+    ApiRespModel onHotelInfo(HotelInfoRequestModel requestModel);
 
-    ApiRespModel<List<HotelRoomStatusResponseModel>> onRoomStatus(HotelRoomStatusRequestModel requestModel);
+    ApiRespModel onRoomStatus(HotelRoomStatusRequestModel requestModel);
 
-    ApiRespModel<String> onAddOrder(AddOrderRequestModel requestModel);
+    ApiRespModel onAddOrder(AddOrderRequestModel requestModel);
+
+    ApiRespModel onCheckInQuery(CheckInRequestModel requestModel);
 }

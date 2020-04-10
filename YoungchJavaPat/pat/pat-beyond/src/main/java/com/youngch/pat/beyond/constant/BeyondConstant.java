@@ -9,7 +9,8 @@ public class BeyondConstant {
         Hotel_GetOrgInfo(2, "Hotel.GetOrgInfo"),//查询某个酒店信息
         Hotel_GetOrgs(3, "Hotel.GetOrgs"),//查询酒店信息
         Hotel_GetRoomStatus(4, "Hotel.GetRoomStatus"),
-        Order_Add(5, "Order.Add");
+        Order_Add(5, "Order.Add"),
+        Order_Query_CheckIns(6, "Order.QueryCheckins");
 
         private int code;
 

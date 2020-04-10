@@ -1,11 +1,11 @@
 package com.youngch.pat.beyond.model.request.order;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.youngch.pat.beyond.model.LiaisonModel;
 import com.youngch.pat.beyond.model.response.RoomCountModel;
 import lombok.Data;
 
 import java.util.Date;
-import java.util.List;
 
 /**
  * @author: yexudong

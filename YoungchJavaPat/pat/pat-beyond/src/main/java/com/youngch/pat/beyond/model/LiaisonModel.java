@@ -1,4 +1,4 @@
-package com.youngch.pat.beyond.model.request.order;
+package com.youngch.pat.beyond.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
@@ -13,4 +13,8 @@ public class LiaisonModel {
     private String Name;
     @JsonProperty("Mobile")
     private String Mobile;
+    @JsonProperty("Gender")
+    private String Gender;
+    @JsonProperty("Nationality")
+    private String Nationality;
 }
