@@ -28,8 +28,8 @@
         <module>pat-beyond</module>
         <module>pat-common</module>
         <module>pat-web</module>
-        <module>pat-domain</module>
-        <module>pat-chat</module>
+<!--        <module>pat-domain</module>-->
+<!--        <module>pat-chat</module>-->
     </modules>
 
     <dependencyManagement>
@@ -131,20 +131,11 @@
                 </configuration>
             </plugin>
             <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-                <configuration><!-- 指定该Main Class为全局的唯一入口 -->
-                    <mainClass>com.youngch.pat.PatApplication</mainClass>
-                    <layout>ZIP</layout>
-                    <executable>true</executable>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <configuration>
+                    <skipTests>true</skipTests>  <!--默认关掉单元测试 -->
                 </configuration>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>repackage</goal>
-                        </goals>
-                    </execution>
-                </executions>
             </plugin>
         </plugins>
     </build>
