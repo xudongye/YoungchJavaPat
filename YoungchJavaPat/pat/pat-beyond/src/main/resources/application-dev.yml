@@ -3,7 +3,7 @@ server:
 domain: dev.youngch-cloud.com
 spring:
   application:
-      name: pat
+      name: beyond
   mybatis:
 
   # MySQL

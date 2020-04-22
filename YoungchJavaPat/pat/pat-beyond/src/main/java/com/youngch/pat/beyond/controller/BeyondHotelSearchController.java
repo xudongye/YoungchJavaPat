@@ -1,4 +1,4 @@
-package com.youngch.pat.web;
+package com.youngch.pat.beyond.controller;
 
 import com.youngch.pat.beyond.model.request.hotel.HotelInfoRequestModel;
 import com.youngch.pat.beyond.model.request.hotel.HotelRoomStatusRequestModel;

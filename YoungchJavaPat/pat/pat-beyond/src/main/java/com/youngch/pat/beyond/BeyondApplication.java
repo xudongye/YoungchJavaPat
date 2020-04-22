@@ -1,4 +1,4 @@
-package com.youngch.pat;
+package com.youngch.pat.beyond;
 
 //import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
@@ -13,11 +13,11 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @EnableCaching
 @ComponentScan({"com.youngch.*"})
 @SpringBootApplication
-public class PatApplication {
+public class BeyondApplication {
 
     public static void main(String[] args) {
         // 程序启动入口
         // 启动嵌入式的 Tomcat 并初始化 Spring 环境及其各 Spring 组件
-        SpringApplication.run(PatApplication.class, args);
+        SpringApplication.run(BeyondApplication.class, args);
     }
 }

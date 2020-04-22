@@ -27,7 +27,6 @@
     <modules>
         <module>pat-beyond</module>
         <module>pat-common</module>
-        <module>pat-web</module>
     </modules>
 
 
