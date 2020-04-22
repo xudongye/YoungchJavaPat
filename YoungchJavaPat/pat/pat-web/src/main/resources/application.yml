@@ -15,7 +15,7 @@ info:
     spring-boot-version: "@spring.boot.version@"
 
 logging:
-  config: classpath:logback-pat.xml
+  config: classpath:logback-spring.xml
   #level: INFO
 
 home: \alidata\youngch\upload\ai\static

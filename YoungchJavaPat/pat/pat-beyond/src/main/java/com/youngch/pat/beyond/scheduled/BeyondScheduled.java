@@ -113,12 +113,11 @@ public class BeyondScheduled {
             for (int i = 0; i < su.length; i++) {
                 //查找缓存
                 CheckInContentResponseModel contentResponseModel = checkStatus.get(su[i]);
-                if (contentResponseModel == null) {
-                    break;
+                if (contentResponseModel != null) {
+                    contentResponseModel.setCheckinStatus("O");
+                    remote(contentResponseModel);
+                    checkStatus.remove(su[i]);
                 }
-                contentResponseModel.setCheckinStatus("O");
-                remote(contentResponseModel);
-                checkStatus.remove(su[i]);
             }
         }
 
@@ -167,6 +166,7 @@ public class BeyondScheduled {
         ZhuzherGuest guest = new ZhuzherGuest();
         guest.setGender(item.getCheckinCustomer().getGender().equals("0") ? "male" : "female");
         guest.setName(item.getCheckinCustomer().getName());
+        guest.setTel(item.getCheckinCustomer().getMobile());
         guests.add(guest);
         zhuzherOrder.setGuest(guests);
         orders.add(zhuzherOrder);
