@@ -163,7 +163,7 @@ public class BeyondScheduled {
         orders.add(zhuzherOrder);
         List<ZhuzherGuest> guests = new ArrayList<>();
         ZhuzherGuest guest = new ZhuzherGuest();
-        guest.setGender(item.getCheckinCustomer().getGender().equals("0") ? "male" : "female");
+        guest.setGender(item.getCheckinCustomer().getGender() == 2 ? "male" : "female");
         guest.setName(item.getCheckinCustomer().getName());
         guest.setTel(item.getCheckinCustomer().getMobile());
         guests.add(guest);

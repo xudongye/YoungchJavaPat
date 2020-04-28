@@ -14,7 +14,7 @@ public class LiaisonModel {
     @JsonProperty("Mobile")
     private String Mobile;
     @JsonProperty("Gender")
-    private String Gender;
+    private int Gender;
     @JsonProperty("Nationality")
     private String Nationality;
 }
