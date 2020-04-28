@@ -10,7 +10,6 @@ import com.youngch.pat.beyond.model.response.CheckInContentResponseModel;
 import com.youngch.pat.beyond.model.response.CheckInResponseModel;
 import com.youngch.pat.beyond.model.response.HotelRoomStatusResponseModel;
 import com.youngch.pat.beyond.service.BeyondService;
-import com.youngch.pat.common.exception.BusinessException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -123,11 +122,11 @@ public class BeyondScheduled {
 
     }
 
-    public static void main(String[] args) {
-        String[] checkInRoomNums = new String[]{"8706", "8703"};
-
-        System.out.println(Arrays.toString(su(checkInRoomNums)));
-    }
+//    public static void main(String[] args) {
+//        String[] checkInRoomNums = new String[]{"8706", "8703"};
+//
+//        System.out.println(Arrays.toString(su(checkInRoomNums)));
+//    }
 
     private static String[] su(String[] checkInRoomNums) {
         Set<String> set = new HashSet<String>(Arrays.asList(ROOMS.length > checkInRoomNums.length ? ROOMS : checkInRoomNums));

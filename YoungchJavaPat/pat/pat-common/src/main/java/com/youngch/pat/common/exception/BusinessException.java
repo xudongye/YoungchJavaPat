@@ -11,7 +11,7 @@ import java.util.Map;
  * 子类需要自行设置自己的错误提示
  *
  */
-public abstract class BusinessException extends RuntimeException{
+public abstract class BusinessException extends RuntimeException {
     /**
      * 错误代码
      * @return

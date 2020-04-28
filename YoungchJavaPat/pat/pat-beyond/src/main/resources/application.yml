@@ -1,11 +1,21 @@
+server:
+  port: 8080
+  servlet:
+    context-path: /beyond
 spring:
+  application:
+    name: beyond
   profiles:
     active: local     # 本地环境
 #    active: dev       # 环境
 #    active: test      # 开发测试环境
 #    active: pre       # 预发环境
 #    active: online    # 生产环境
-
+  # Logback
+  log:
+    file:
+      path: ${home}/log/${spring.application.name}/${spring.profiles.active} # 日志文件路径
+      maxKeep: 5  # 最大保留的文件个数
 # health monitor
 info:
   app:

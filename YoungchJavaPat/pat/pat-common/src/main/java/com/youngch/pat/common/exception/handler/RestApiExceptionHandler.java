@@ -1,7 +1,6 @@
 package com.youngch.pat.common.exception.handler;
 
 import com.youngch.pat.common.exception.BusinessException;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.HandlerExceptionResolver;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.json.MappingJackson2JsonView;
@@ -9,12 +8,6 @@ import org.springframework.web.servlet.view.json.MappingJackson2JsonView;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-/**
- * 全局异常处理类,通过实现 HandlerExceptionResolver类做全局异常处理
- * 优点：相对于方法4可以传递异常信息
- */
-
-@Configuration
 public class RestApiExceptionHandler implements HandlerExceptionResolver {
     @Override
     public ModelAndView resolveException(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o, Exception e) {

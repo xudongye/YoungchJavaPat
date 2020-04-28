@@ -12,7 +12,7 @@ public class EnumConstant {
     /**
      * 枚举接口类全路径
      */
-    public final static String ENUMNAME_CLASS = "com.youngch.pat.base.utils.enums.EnumName";
+    public final static String ENUMNAME_CLASS = "com.youngch.commons.base.utils.enums.EnumName";
 
     /**
      * 所有枚举对象的 map
