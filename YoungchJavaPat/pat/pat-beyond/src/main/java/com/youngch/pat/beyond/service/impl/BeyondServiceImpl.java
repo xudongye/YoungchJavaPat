@@ -74,7 +74,7 @@ public class BeyondServiceImpl implements BeyondService {
         String bizContent = JsonHelper.SerializeObject(requestModel);
         ApiReqModel reqModel = ReqCommonHelper.getCommonRequestModel(BeyondConstant.BeyondMethod.Order_Query_CheckIns.getName(), bizContent);
         ApiRespModel respModel = handleApiResult(reqModel);
-        LOGGER.info("入住查询：{}", respModel.Data);
+        LOGGER.debug("入住查询：{}", respModel.Data);
         return respModel;
     }
 

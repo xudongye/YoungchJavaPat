@@ -147,7 +147,7 @@ public class BeyondScheduled {
         int statusType = "I".equals(item.getCheckinStatus()) ? 1 : 2;
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         ZhuzherResponseBean responseBean = new ZhuzherResponseBean();
-        LOGGER.info("room {} ,status {} ,customer {}", item.getRoomNumber(), item.getCheckinStatus(), item.getCheckinCustomer().getName());
+        LOGGER.info("[入住查询成功]：房间号 {} ,状态 {} ,入住人 {}", item.getRoomNumber(), item.getCheckinStatus(), item.getCheckinCustomer().getName());
         responseBean.setType(statusType);
         ZhuzherData zhuzherData = new ZhuzherData();
         zhuzherData.setHotel_id(item.getOrgId() + "");
@@ -164,7 +164,9 @@ public class BeyondScheduled {
         List<ZhuzherGuest> guests = new ArrayList<>();
         ZhuzherGuest guest = new ZhuzherGuest();
         int gender = item.getCheckinCustomer().getGender();
-        guest.setGender(gender == 2 ? "male" : gender == 1 ? "female" : "unknown");
+        String genderString = gender == 2 ? "male" : gender == 1 ? "female" : "unknown";
+        guest.setGender(genderString);
+        LOGGER.info("[入住人信息]：checkIn from {}，gender {}", item.getRoomNumber(), genderString);
         guest.setName(item.getCheckinCustomer().getName());
         guest.setTel(item.getCheckinCustomer().getMobile());
         guests.add(guest);
