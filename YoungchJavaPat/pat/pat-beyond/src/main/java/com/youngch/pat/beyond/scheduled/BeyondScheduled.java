@@ -163,7 +163,8 @@ public class BeyondScheduled {
         orders.add(zhuzherOrder);
         List<ZhuzherGuest> guests = new ArrayList<>();
         ZhuzherGuest guest = new ZhuzherGuest();
-        guest.setGender(item.getCheckinCustomer().getGender() == 2 ? "male" : "female");
+        int gender = item.getCheckinCustomer().getGender();
+        guest.setGender(gender == 2 ? "male" : gender == 1 ? "female" : "unknown");
         guest.setName(item.getCheckinCustomer().getName());
         guest.setTel(item.getCheckinCustomer().getMobile());
         guests.add(guest);
@@ -172,6 +173,16 @@ public class BeyondScheduled {
         zhuzherData.setOrder(orders);
         responseBean.setData(zhuzherData);
         ReqCommonHelper.callOnAiPmsServer(responseBean);
+    }
+
+    private String genderFromIdCardNo(String idCardNo) {
+        String sex = "";
+        if (Integer.parseInt(idCardNo.substring(16).substring(0, 1)) % 2 == 0) {
+            sex = "female";
+        } else {
+            sex = "male";
+        }
+        return sex;
     }
 
 }
