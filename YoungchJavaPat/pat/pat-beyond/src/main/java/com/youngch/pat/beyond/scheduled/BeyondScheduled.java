@@ -98,11 +98,10 @@ public class BeyondScheduled {
                 checkInRoomNums[i] = contentResponseModels[i].getRoomNumber();
                 //查找缓存
                 CheckInContentResponseModel contentResponseModel = checkStatus.get(contentResponseModels[i].getRoomNumber());
-                if (contentResponseModel != null) {
-                    return;
+                if (contentResponseModel == null) {
+                    remote(contentResponseModels[i]);
+                    checkStatus.put(contentResponseModels[i].getRoomNumber(), contentResponseModels[i]);
                 }
-                remote(contentResponseModels[i]);
-                checkStatus.put(contentResponseModels[i].getRoomNumber(), contentResponseModels[i]);
             }
         }
 
