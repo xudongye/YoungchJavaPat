@@ -69,7 +69,7 @@ public class BeyondScheduled {
     }
 
 
-    private static String[] ROOMS = new String[]{"8703", "8705", "8706"};
+    private static String[] ROOMS = new String[]{"8703", "8705", "8706", "1001"};
 
     private static ConcurrentHashMap<String, CheckInContentResponseModel> checkStatus = new ConcurrentHashMap<>();
 
