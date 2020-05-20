@@ -1,4 +1,4 @@
-package com.youngch.pat.beyond.scheduled;
+package com.youngch.pat.beyond.dto;
 
 import java.util.List;
 

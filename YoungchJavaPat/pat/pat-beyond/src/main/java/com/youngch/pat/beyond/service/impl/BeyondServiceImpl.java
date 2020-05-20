@@ -31,7 +31,7 @@ public class BeyondServiceImpl implements BeyondService {
         ApiReqModel reqModel = ReqCommonHelper.getCommonRequestModel(
                 BeyondConstant.BeyondMethod.Hotel_SearchHotelWithRoomPriceAndRoomCount.getName(), bizContent);
         ApiRespModel respModel = handleApiResult(reqModel);
-        LOGGER.info("酒店列表: {}", respModel.Data);
+        LOGGER.debug("【酒店列表】: {}", respModel.Data);
         return respModel;
 
     }
@@ -43,7 +43,7 @@ public class BeyondServiceImpl implements BeyondService {
                 BeyondConstant.BeyondMethod.Hotel_GetOrgInfo.getName(), bizContent);
 
         ApiRespModel respModel = handleApiResult(reqModel);
-        LOGGER.info("酒店信息: {}", respModel.Data);
+        LOGGER.debug("【酒店信息】: {}", respModel.Data);
         return respModel;
 
     }
@@ -56,7 +56,7 @@ public class BeyondServiceImpl implements BeyondService {
 
         ApiRespModel respModel = handleApiResult(reqModel);
 
-        LOGGER.info("房态查询: {}", respModel.Data);
+        LOGGER.debug("【房态查询】: {}", respModel.Data);
         return respModel;
     }
 
@@ -65,7 +65,7 @@ public class BeyondServiceImpl implements BeyondService {
         String bizContent = JsonHelper.SerializeObject(requestModel);
         ApiReqModel reqModel = ReqCommonHelper.getCommonRequestModel(BeyondConstant.BeyondMethod.Order_Add.getName(), bizContent);
         ApiRespModel respModel = handleApiResult(reqModel);
-        LOGGER.info("创建订单：{}", respModel.Data);
+        LOGGER.debug("【创建订单】：{}", respModel.Data);
         return respModel;
     }
 
@@ -74,7 +74,7 @@ public class BeyondServiceImpl implements BeyondService {
         String bizContent = JsonHelper.SerializeObject(requestModel);
         ApiReqModel reqModel = ReqCommonHelper.getCommonRequestModel(BeyondConstant.BeyondMethod.Order_Query_CheckIns.getName(), bizContent);
         ApiRespModel respModel = handleApiResult(reqModel);
-        LOGGER.debug("入住查询：{}", respModel.Data);
+        LOGGER.debug("【入住查询】：{}", respModel.Data);
         return respModel;
     }
 
@@ -82,7 +82,7 @@ public class BeyondServiceImpl implements BeyondService {
 
         ResponseEntity<String> responseMessage = ReqCommonHelper.getRemoteRequest(reqModel);
 
-        LOGGER.info("beyond api result: {}", responseMessage.getBody());
+        LOGGER.debug("beyond api result: {}", responseMessage.getBody());
 
         ApiRespModel result = JsonHelper.DeserializeObject(responseMessage.getBody(), new TypeReference<ApiRespModel>() {
         });
@@ -90,10 +90,7 @@ public class BeyondServiceImpl implements BeyondService {
         if (result == null) {
             throw new ResultResolveFailException(responseMessage.getBody());
         }
-        if (result.Code == 10000) {
-            return result;
-        }
-        throw new ResultResolveFailException(result.SubMessage);
+        return result;
     }
 
 }

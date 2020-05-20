@@ -1,4 +1,4 @@
-package com.youngch.pat.beyond.scheduled;
+package com.youngch.pat.beyond.component;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -9,6 +9,10 @@ import com.youngch.pat.beyond.model.response.ApiRespModel;
 import com.youngch.pat.beyond.model.response.CheckInContentResponseModel;
 import com.youngch.pat.beyond.model.response.CheckInResponseModel;
 import com.youngch.pat.beyond.model.response.HotelRoomStatusResponseModel;
+import com.youngch.pat.beyond.dto.ZhuzherData;
+import com.youngch.pat.beyond.dto.ZhuzherGuest;
+import com.youngch.pat.beyond.dto.ZhuzherOrder;
+import com.youngch.pat.beyond.dto.ZhuzherResponseBean;
 import com.youngch.pat.beyond.service.BeyondService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -73,7 +77,7 @@ public class BeyondScheduled {
 
     private static ConcurrentHashMap<String, CheckInContentResponseModel> checkStatus = new ConcurrentHashMap<>();
 
-    @Scheduled(cron = "0/5 * * * * ?")
+//    @Scheduled(cron = "0/5 * * * * ?")
     public void pollCheckInStatus() {
         CheckInRequestModel requestModel = new CheckInRequestModel();
         requestModel.setOrgId(1035613440376851L);

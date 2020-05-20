@@ -3,29 +3,23 @@ server:
   servlet:
     context-path: /beyond
 spring:
-  application:
-    name: beyond
   profiles:
-    active: local     # 本地环境
-#    active: dev       # 环境
-#    active: test      # 开发测试环境
-#    active: pre       # 预发环境
-#    active: online    # 生产环境
-  # Logback
-  log:
-    file:
-      path: ${home}/log/${spring.application.name}/${spring.profiles.active} # 日志文件路径
-      maxKeep: 5  # 最大保留的文件个数
-# health monitor
-info:
-  app:
-    name: "@project.name@"
-    description: "@project.description@"
-    version: "@project.version@"
-    spring-boot-version: "@spring.boot.version@"
+    active: dev #默认为开发环境
+  servlet:
+    multipart:
+      enabled: true #开启文件上传
+      max-file-size: 10MB #限制文件上传大小为10M
+
+mybatis:
+  mapper-locations:
+    - classpath:dao/*.xml
+    - classpath*:com/**/mapper/*.xml
 
 logging:
+  path: /var/logs #配置日志文件名称
+  file: beyond.log #配置日志生成路径
+  root:
+    level: INFO #日志配置DEBUG,INFO,WARN,ERROR
   config: classpath:logback-spring.xml
-  #level: INFO
 
 home: \alidata\youngch\upload\ai\static

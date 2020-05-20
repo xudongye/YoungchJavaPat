@@ -1,5 +1,6 @@
 package com.youngch.pat.beyond.controller;
 
+import com.youngch.pat.beyond.domain.Hotel;
 import com.youngch.pat.beyond.model.request.hotel.HotelInfoRequestModel;
 import com.youngch.pat.beyond.model.request.hotel.HotelRoomStatusRequestModel;
 import com.youngch.pat.beyond.model.request.hotel.HotelSearchRequestModel;
@@ -7,6 +8,8 @@ import com.youngch.pat.beyond.model.request.order.AddOrderRequestModel;
 import com.youngch.pat.beyond.model.request.order.CheckInRequestModel;
 import com.youngch.pat.beyond.model.response.*;
 import com.youngch.pat.beyond.service.BeyondService;
+import com.youngch.pat.beyond.service.HotelService;
+import com.youngch.pat.model.BeyondHotel;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,13 +22,25 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@Api(tags = "beyond-pms")
+@Api(tags = "BeyondHotelSearchController")
 @RestController
-@RequestMapping(value = "/api/youngch/v1/beyond")
+@RequestMapping(value = "/v1/beyond")
 public class BeyondHotelSearchController {
 
     @Autowired
     private BeyondService beyondService;
+
+    @Autowired
+    private HotelService hotelService;
+
+    @ApiOperation(value = "对接酒店列表", httpMethod = "GET")
+    @RequestMapping(value = "/hotels", method = RequestMethod.GET)
+    public ResponseEntity<Map<String, Object>> hotelList(HttpServletRequest request) {
+        Map<String, Object> responseBody = new HashMap<>();
+        List<Hotel> all = hotelService.getAll();
+        responseBody.put("data", all);
+        return new ResponseEntity<>(responseBody, HttpStatus.OK);
+    }
 
     @ApiOperation(value = "别样红测试接口", httpMethod = "GET")
     @RequestMapping(value = "/test", method = RequestMethod.GET)

@@ -14,7 +14,7 @@
     <dependencies>
         <dependency>
             <groupId>com.youngch</groupId>
-            <artifactId>pat-common</artifactId>
+            <artifactId>pat-mbg</artifactId>
             <version>1.0.1-SNAPSHOT</version>
         </dependency>
         <dependency>

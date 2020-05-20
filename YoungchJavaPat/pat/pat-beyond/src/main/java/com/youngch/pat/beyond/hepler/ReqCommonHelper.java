@@ -3,7 +3,7 @@ package com.youngch.pat.beyond.hepler;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.youngch.pat.beyond.exception.ApiCallOnFailException;
 import com.youngch.pat.beyond.model.request.ApiReqModel;
-import com.youngch.pat.beyond.scheduled.ZhuzherResponseBean;
+import com.youngch.pat.beyond.dto.ZhuzherResponseBean;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.ResponseHandler;
