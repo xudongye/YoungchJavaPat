@@ -1,6 +1,5 @@
 package com.youngch.pat.beyond.domain;
 
-import io.swagger.annotations.ApiModelProperty;
 
 import java.io.Serializable;
 import java.util.ArrayList;
