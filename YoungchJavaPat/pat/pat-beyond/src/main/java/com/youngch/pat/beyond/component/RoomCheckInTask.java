@@ -31,6 +31,13 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 /**
+ * 关于房态查询优化：
+ * 1.调用别样红roomStatus函数查询所有酒店房间的空住的状态
+ * 2.再通过管道过滤订单设置为对应的I（入住）或O（退房）状态
+ * 3.是否远程发送订单：首先获取是否有入住锁定isLocked,
+ * 在isLocked=true状态下，一旦发现订单为O（退房状态），则发送退房订单
+ * 在isLocked=false状态下，一旦发现订单为I（入住状态），则发送入住订单
+ *
  * @author: yexudong
  * @Date: 2020/5/20 9:34
  */
