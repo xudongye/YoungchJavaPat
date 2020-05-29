@@ -1,5 +1,6 @@
 package com.youngch.pat.beyond.component;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.youngch.pat.beyond.domain.Hotel;
@@ -8,21 +9,19 @@ import com.youngch.pat.beyond.dto.ZhuzherData;
 import com.youngch.pat.beyond.dto.ZhuzherGuest;
 import com.youngch.pat.beyond.dto.ZhuzherOrder;
 import com.youngch.pat.beyond.dto.ZhuzherResponseBean;
-import com.youngch.pat.beyond.hepler.ReqCommonHelper;
-import com.youngch.pat.beyond.model.request.hotel.HotelRoomStatusRequestModel;
-import com.youngch.pat.beyond.model.request.order.CheckInRequestModel;
-import com.youngch.pat.beyond.model.response.ApiRespModel;
-import com.youngch.pat.beyond.model.response.CheckInContentResponseModel;
-import com.youngch.pat.beyond.model.response.CheckInResponseModel;
-import com.youngch.pat.beyond.model.response.HotelRoomStatusResponseModel;
+import com.youngch.pat.common.beyond.hepler.ReqCommonHelper;
+import com.youngch.pat.common.beyond.model.request.HotelRoomStatusRequestModel;
+import com.youngch.pat.common.beyond.model.request.CheckInRequestModel;
+import com.youngch.pat.common.beyond.model.response.ApiRespModel;
+import com.youngch.pat.common.beyond.model.response.CheckInContentResponseModel;
+import com.youngch.pat.common.beyond.model.response.CheckInResponseModel;
+import com.youngch.pat.common.beyond.model.response.HotelRoomStatusResponseModel;
 import com.youngch.pat.beyond.repository.RoomCheckStatusRefreshLockDao;
-import com.youngch.pat.beyond.service.BeyondService;
+import com.youngch.pat.common.beyond.service.BeyondService;
 import com.youngch.pat.beyond.service.HotelService;
-import com.youngch.pat.common.exception.BusinessException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import java.text.SimpleDateFormat;
@@ -55,7 +54,7 @@ public class RoomCheckInTask {
     @Autowired
     private RoomCheckStatusRefreshLockDao refreshLockDao;
 
-    @Scheduled(cron = "0/5 * * * * ?")
+    //    @Scheduled(cron = "0/5 * * * * ?")
     public void pollRoomStatus() {
         List<Hotel> hotels = hotelService.getAll();
         if (hotels.isEmpty()) {
@@ -170,7 +169,12 @@ public class RoomCheckInTask {
         orders.add(zhuzherOrder);
         zhuzherData.setOrder(orders);
         responseBean.setData(zhuzherData);
-        String result = ReqCommonHelper.callOnAiPmsServer(responseBean);
-        LOGGER.info("【订单推送成功】：result {}", result);
+        String result = null;
+        try {
+            result = ReqCommonHelper.callOnAiPmsServer(new ObjectMapper().writeValueAsString(responseBean));
+            LOGGER.info("【订单推送成功】：result {}", result);
+        } catch (JsonProcessingException e) {
+            LOGGER.error(e.getMessage());
+        }
     }
 }

@@ -1,0 +1,24 @@
+server:
+  port: 8100
+  servlet:
+    context-path: /cloudwalk
+spring:
+  profiles:
+    active: prod #默认为开发环境
+  servlet:
+    multipart:
+      enabled: true #开启文件上传
+      max-file-size: 10MB #限制文件上传大小为10M
+
+mybatis:
+  mapper-locations:
+    - classpath:dao/*.xml
+    - classpath*:com/**/mapper/*.xml
+
+logging:
+  path: /var/logs #配置日志文件名称
+  file: cloudwalk.log #配置日志生成路径
+  root:
+    level: INFO #日志配置DEBUG,INFO,WARN,ERROR
+  config: classpath:logback-spring.xml
+

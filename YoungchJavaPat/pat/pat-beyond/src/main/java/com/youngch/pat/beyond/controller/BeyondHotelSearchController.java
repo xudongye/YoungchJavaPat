@@ -1,15 +1,13 @@
 package com.youngch.pat.beyond.controller;
 
 import com.youngch.pat.beyond.domain.Hotel;
-import com.youngch.pat.beyond.model.request.hotel.HotelInfoRequestModel;
-import com.youngch.pat.beyond.model.request.hotel.HotelRoomStatusRequestModel;
-import com.youngch.pat.beyond.model.request.hotel.HotelSearchRequestModel;
-import com.youngch.pat.beyond.model.request.order.AddOrderRequestModel;
-import com.youngch.pat.beyond.model.request.order.CheckInRequestModel;
-import com.youngch.pat.beyond.model.response.*;
-import com.youngch.pat.beyond.service.BeyondService;
+import com.youngch.pat.common.beyond.model.request.HotelRoomStatusRequestModel;
+import com.youngch.pat.common.beyond.model.request.HotelSearchRequestModel;
+import com.youngch.pat.common.beyond.model.request.AddOrderRequestModel;
+import com.youngch.pat.common.beyond.model.request.CheckInRequestModel;
+import com.youngch.pat.common.beyond.model.response.*;
+import com.youngch.pat.common.beyond.service.BeyondService;
 import com.youngch.pat.beyond.service.HotelService;
-import com.youngch.pat.model.BeyondHotel;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -59,17 +57,6 @@ public class BeyondHotelSearchController {
         responseBody.put("success", true);
         responseBody.put("data", responseModel);
         return new ResponseEntity<>(responseBody, HttpStatus.CREATED);
-    }
-
-    @ApiOperation(value = "别样红搜索酒店基本信息请求接口", httpMethod = "POST")
-    @RequestMapping(value = "/hotelInfo", method = RequestMethod.POST)
-    public ResponseEntity<Map<String, Object>> searchInfo(HttpServletRequest request,
-                                                          @RequestBody HotelInfoRequestModel requestModel) {
-        Map<String, Object> responseBody = new HashMap<>();
-        ApiRespModel responseModel = beyondService.onHotelInfo(requestModel);
-        responseBody.put("success", true);
-        responseBody.put("data", responseModel);
-        return new ResponseEntity<>(responseBody, HttpStatus.OK);
     }
 
     @ApiOperation(value = "别样红搜索酒店创建订单", httpMethod = "POST")
