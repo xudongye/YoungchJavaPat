@@ -4,10 +4,12 @@ import cn.hutool.json.JSONArray;
 import cn.hutool.json.JSONObject;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.youngch.pat.cloudwalk.service.CheckInParam;
 import com.youngch.pat.cloudwalk.service.CloudWalkService;
 import com.youngch.pat.cloudwalk.service.HotelRoomQueryCondition;
 import com.youngch.pat.cloudwalk.service.MemberQueryCondition;
 import com.youngch.pat.cloudwalk.vo.*;
+import com.youngch.pat.common.beyond.model.CheckInCustomerModel;
 import com.youngch.pat.common.beyond.model.request.*;
 import com.youngch.pat.common.beyond.model.response.*;
 import com.youngch.pat.common.beyond.service.BeyondService;
@@ -152,27 +154,68 @@ public class CloudWalkServiceImpl implements CloudWalkService {
         JSONObject data = new JSONObject(apiRespModel.Data);
 
         List<PreOrderInfo> orderInfos = new ArrayList<>();
-        PreOrderInfo orderInfo = null;
-        Liaison[] liaisons = null;
-        Liaison liaisonInfo = new Liaison();
         JSONArray content = data.getJSONArray("Content");
         for (Object o : content) {
             JSONObject order = new JSONObject(o);
-            orderInfo = new PreOrderInfo();
-            orderInfo.setHotelId(order.getStr("OrgId"));
-            orderInfo.setBillId(order.getLong("BillId"));
-            orderInfo.setEstimatedArriveTime(order.getStr("EstimatedArriveTime"));
-            orderInfo.setEstimatedDepartureTime(order.getStr("EstimatedDepartureTime"));
-            orderInfo.setCheckInType(order.getStr("CheckinType"));
-            orderInfo.setMemo(order.getStr("Memo"));
-            orderInfo.setOrderId(order.getStr("OrderId"));
-            orderInfo.setOrderNo(order.getStr("OrderNo"));
-            orderInfo.setOrderSource(order.getStr("OrderSource"));
-            orderInfo.setOrderStatus(order.getStr("OrderStatus"));
+            orderInfos.add(json2OrderInfo(order));
+        }
 
-            JSONArray orderLiaisons = order.getJSONArray("Liaisons");
+        return orderInfos;
+    }
+
+    @Override
+    public PreOrderInfo getSingleOrder(String orderId, String hotelId) {
+        QuerySingleOrderRequestModel requestModel = new QuerySingleOrderRequestModel();
+        requestModel.setOrgId(Long.parseLong(hotelId));
+        requestModel.setOrderId(orderId);
+        ApiRespModel respModel = beyondService.onQuerySingleOrder(requestModel);
+        JSONObject orderInfo = new JSONObject(respModel.Data);
+
+        return json2OrderInfo(orderInfo);
+    }
+
+    @Override
+    public boolean checkIn(CheckInParam checkInParam) {
+        AddCheckInRequestModel requestModel = new AddCheckInRequestModel();
+        requestModel.setOrgId(Long.valueOf(checkInParam.getHotelId()));
+        requestModel.setOccupationId(Long.valueOf(checkInParam.getOccupationId()));
+        requestModel.setOrderId(Long.valueOf(checkInParam.getOrderId()));
+        CheckInCustomerModel customerModel = new CheckInCustomerModel();
+        customerModel.setCardNo(checkInParam.getIdCardNo());
+        customerModel.setMobile(checkInParam.getMobile());
+        customerModel.setName(checkInParam.getName());
+        customerModel.setThemSelfCheckin(checkInParam.isICheckIn());
+        requestModel.setCustomer(customerModel);
+        ApiRespModel respModel = beyondService.onAddCheckIn(requestModel);
+        return (boolean) respModel.Data;
+    }
+
+    private PreOrderInfo json2OrderInfo(JSONObject object) {
+        PreOrderInfo orderInfo = new PreOrderInfo();
+
+        Liaison[] liaisons = null;
+        Liaison liaisonInfo = null;
+
+        OccupationModel[] occupationModels = null;
+        OccupationModel occupationModel = null;
+
+        RoomPlan[] roomPlans = null;
+        RoomPlan roomPlan = null;
+
+        orderInfo.setHotelId(object.getStr("OrgId"));
+        orderInfo.setBillId(object.getLong("BillId"));
+        orderInfo.setEstimatedArriveTime(object.getStr("EstimatedArriveTime"));
+        orderInfo.setEstimatedDepartureTime(object.getStr("EstimatedDepartureTime"));
+        orderInfo.setCheckInType(object.getStr("CheckinType"));
+        orderInfo.setMemo(object.getStr("Memo"));
+        orderInfo.setOrderId(object.getStr("OrderId"));
+        orderInfo.setOrderNo(object.getStr("OrderNo"));
+        orderInfo.setOrderSource(object.getStr("OrderSource"));
+        orderInfo.setOrderStatus(object.getStr("OrderStatus"));
+
+        if (!object.isNull("Liaisons")) {
+            JSONArray orderLiaisons = object.getJSONArray("Liaisons");
             liaisons = new Liaison[orderLiaisons.size()];
-
             for (int i = 0; i < orderLiaisons.size(); i++) {
                 JSONObject liaison = new JSONObject(orderLiaisons.get(i));
                 liaisonInfo = new Liaison();
@@ -180,10 +223,60 @@ public class CloudWalkServiceImpl implements CloudWalkService {
                 liaisonInfo.setMobile(liaison.getStr("Mobile"));
                 liaisons[i] = liaisonInfo;
             }
-
             orderInfo.setLiaisons(liaisons);
-            orderInfos.add(orderInfo);
         }
-        return orderInfos;
+
+        if (!object.isNull("Occupations")) {
+            JSONArray orderOccupations = object.getJSONArray("Occupations");
+
+            occupationModels = new OccupationModel[orderOccupations.size()];
+            for (int i = 0; i < orderOccupations.size(); i++) {
+                JSONObject occ = new JSONObject(orderOccupations.get(i));
+                occupationModel = new OccupationModel();
+                occupationModel.setRoomNo(occ.getStr("RoomNumber"));
+                occupationModel.setOccupationId(occ.getStr("OccupationId"));
+                occupationModel.setOccupationStartTime(occ.getStr("OccupationStartTime"));
+                occupationModel.setOccupationEndTime(occ.getStr("OccupationEndTime"));
+                occupationModel.setOrderId(occ.getStr("OrderId"));
+                occupationModels[i] = occupationModel;
+            }
+            orderInfo.setOccupations(occupationModels);
+        }
+
+        RoomPrice[] roomPrices = null;
+        RoomPrice roomPrice = null;
+        if (!object.isNull("RoomPlans")) {
+            JSONArray orderRoomPlans = object.getJSONArray("RoomPlans");
+            roomPlans = new RoomPlan[orderRoomPlans.size()];
+            for (int i = 0; i < orderRoomPlans.size(); i++) {
+                JSONObject plan = new JSONObject(orderRoomPlans.get(i));
+                roomPlan = new RoomPlan();
+                roomPlan.setCount(plan.getInt("Count"));
+                roomPlan.setRoomNos(plan.getJSONArray("RoomNumbers").toArray(new String[]{}));
+                roomPlan.setRoomTypeId(plan.getStr("RoomTypeId"));
+                roomPlans[i] = roomPlan;
+
+                JSONArray prices = plan.getJSONArray("Price");
+                if (prices.size() > 0) {
+                    roomPrices = new RoomPrice[prices.size()];
+                    for (int j = 0; j < prices.size(); j++) {
+                        JSONObject price = new JSONObject(prices.get(j));
+                        roomPrice = new RoomPrice();
+                        roomPrice.setDate(price.getStr("Date"));
+                        roomPrice.setActualPrice(price.getFloat("ActualPrice"));
+                        roomPrice.setOriginPrice(price.getFloat("OrignPrice"));
+                        roomPrice.setDescription(price.getStr("Description"));
+                        roomPrice.setRoomCount(price.getInt("RoomCount"));
+                        roomPrices[i] = roomPrice;
+                    }
+                    roomPlan.setPrices(roomPrices);
+                }
+                orderInfo.setRoomPlans(roomPlans);
+
+            }
+        }
+
+        return orderInfo;
     }
+
 }

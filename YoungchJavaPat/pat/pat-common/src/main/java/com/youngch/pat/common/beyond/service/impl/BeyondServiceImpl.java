@@ -127,6 +127,24 @@ public class BeyondServiceImpl implements BeyondService {
         return respModel;
     }
 
+    @Override
+    public ApiRespModel onQuerySingleOrder(QuerySingleOrderRequestModel requestModel) {
+        String bizContent = JsonHelper.SerializeObject(requestModel);
+        ApiReqModel reqModel = ReqCommonHelper.getCommonRequestModel(BeyondConstant.BeyondMethod.Order_QuerySingleOrder.getName(), bizContent);
+        ApiRespModel respModel = handleApiResult(reqModel);
+        LOGGER.debug("【单个订单详情】:{}", respModel.Data);
+        return respModel;
+    }
+
+    @Override
+    public ApiRespModel onAddCheckIn(AddCheckInRequestModel requestModel) {
+        String bizContent = JsonHelper.SerializeObject(requestModel);
+        ApiReqModel reqModel = ReqCommonHelper.getCommonRequestModel(BeyondConstant.BeyondMethod.Order_AddCheckin.getName(), bizContent);
+        ApiRespModel respModel = handleApiResult(reqModel);
+        LOGGER.debug("【办理入住】:{}", respModel.Data);
+        return respModel;
+    }
+
     private ApiRespModel handleApiResult(ApiReqModel reqModel) {
 
         ResponseEntity<String> responseMessage = ReqCommonHelper.getRemoteRequest(reqModel);

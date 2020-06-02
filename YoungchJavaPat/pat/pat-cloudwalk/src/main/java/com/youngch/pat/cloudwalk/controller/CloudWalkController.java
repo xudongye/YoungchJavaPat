@@ -1,10 +1,12 @@
 package com.youngch.pat.cloudwalk.controller;
 
 import com.youngch.pat.cloudwalk.constant.CloudWalkConstant;
+import com.youngch.pat.cloudwalk.service.CheckInParam;
 import com.youngch.pat.cloudwalk.service.CloudWalkService;
 import com.youngch.pat.cloudwalk.service.HotelRoomQueryCondition;
 import com.youngch.pat.cloudwalk.service.MemberQueryCondition;
 import com.youngch.pat.cloudwalk.vo.*;
+import com.youngch.pat.common.beyond.model.response.ApiRespModel;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -14,7 +16,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -30,6 +31,28 @@ public class CloudWalkController {
 
     @Autowired
     private CloudWalkService cloudWalkService;
+
+    @ApiOperation(value = "查询订单详情", httpMethod = "GET")
+    @RequestMapping(value = "/singleOrderInfo", method = RequestMethod.GET)
+    public ResponseEntity<Map<String, Object>> singleOrderInfo(HttpServletRequest request,
+                                                               @RequestParam @ApiParam(name = "hotelId", value = "酒店编号", required = true) String hotelId,
+                                                               @RequestParam @ApiParam(name = "orderId", value = "订单编号", required = true) String orderId) {
+        Map<String, Object> responseBody = new HashMap<>();
+        PreOrderInfo orderInfo = cloudWalkService.getSingleOrder(orderId, hotelId);
+        responseBody.put("success", true);
+        responseBody.put("data", orderInfo);
+        return new ResponseEntity<>(responseBody, HttpStatus.OK);
+    }
+
+    @ApiOperation(value = "办理入住", httpMethod = "POST")
+    @RequestMapping(value = "/checkIn", method = RequestMethod.POST)
+    public ResponseEntity<Map<String, Object>> addOrder(HttpServletRequest request,
+                                                        @RequestBody CheckInParam checkInParam) {
+        Map<String, Object> responseBody = new HashMap<>();
+        boolean isChecked = cloudWalkService.checkIn(checkInParam);
+        responseBody.put("success", isChecked);
+        return new ResponseEntity<>(responseBody, HttpStatus.CREATED);
+    }
 
 
     @ApiOperation(value = "通过入住用户身份信息查询预订单", httpMethod = "GET")

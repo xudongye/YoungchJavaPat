@@ -28,4 +28,8 @@ public interface BeyondService {
     ApiRespModel onSearchMembers(SearchMembersRequestModel requestModel);
 
     ApiRespModel onQueryOrders(QueryOrdersRequestModel queryOrdersRequestModel);
+
+    ApiRespModel onQuerySingleOrder(QuerySingleOrderRequestModel requestModel);
+
+    ApiRespModel onAddCheckIn(AddCheckInRequestModel requestModel);
 }

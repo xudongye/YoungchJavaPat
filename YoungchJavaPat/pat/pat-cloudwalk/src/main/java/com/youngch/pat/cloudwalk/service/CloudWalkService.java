@@ -19,4 +19,10 @@ public interface CloudWalkService {
     List<RoomTypeInfo> getHotelRoomTypeCountAndPriceList(HotelRoomQueryCondition condition);
 
     List<PreOrderInfo> getOrderByLiaison(String hotelId, String keyword);
+
+    PreOrderInfo getSingleOrder(String orderId, String hotelId);
+
+//    PreOrderInfo addOrder(String checkInType, String hotelId);
+
+    boolean checkIn(CheckInParam checkInParam);
 }

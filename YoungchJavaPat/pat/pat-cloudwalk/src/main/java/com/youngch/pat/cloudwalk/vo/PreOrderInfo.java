@@ -19,4 +19,6 @@ public class PreOrderInfo {
     private String memo;
     private String orderSource;
     private Liaison[] liaisons;
+    private RoomPlan[] roomPlans;
+    private OccupationModel[] occupations;
 }

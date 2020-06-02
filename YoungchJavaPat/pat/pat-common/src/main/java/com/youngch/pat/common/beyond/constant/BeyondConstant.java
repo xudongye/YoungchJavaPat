@@ -16,7 +16,9 @@ public class BeyondConstant {
         Hotel_GetOrgRoomTypes(9, "Hotel.GetOrgRoomTypes"),
         Hotel_GetMemberHourRentPrice(10, "Hotel.GetMemberHourRentPrice"),
         Member_SearchMembers(11, "Member.SearchMembers"),
-        Order_QueryOrders(12, "Order.QueryOrders");
+        Order_QueryOrders(12, "Order.QueryOrders"),
+        Order_QuerySingleOrder(13, "Order.QuerySingleOrder"),
+        Order_AddCheckin(14, "Order.AddCheckin");
 
         private int code;
 
