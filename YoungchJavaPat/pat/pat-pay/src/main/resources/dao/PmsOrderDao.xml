@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.youngch.pat.pay.dao.PmsOrderDao">
+
+    <select id="getByOrderId" resultMap="com.youngch.pat.mapper.PmsOrderMapper.BaseResultMap">
+        SELECT
+        *
+        FROM
+        pms_order
+        WHERE
+        order_id = #{orderId}
+    </select>
+
+    <update id="markOrderPaid">
+        UPDATE pms_order
+        SET
+        pay_time = now(),
+        pay_status = 1,
+        pay_type = #{payType}
+        WHERE order_id = #{orderId}
+    </update>
+</mapper>
