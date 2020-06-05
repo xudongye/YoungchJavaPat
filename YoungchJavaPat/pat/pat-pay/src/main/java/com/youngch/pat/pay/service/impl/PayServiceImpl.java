@@ -174,6 +174,7 @@ public class PayServiceImpl implements PayService {
         PayOrder accountPayOrder = new PayOrder();
         accountPayOrder.setPaid(false);
         accountPayOrder.setPmsOrderId(payOrderBean.getOrderId());
+        accountPayOrder.setHotelId(payOrderBean.);
         accountPayOrder.setPayType(payOrderBean.getPayType().getCode());
         accountPayOrder.setTradeType(payOrderBean.getTradeType().getName());
         accountPayOrder.setTotalFee(totalFee);

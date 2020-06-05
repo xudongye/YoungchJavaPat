@@ -5,6 +5,7 @@ import com.youngch.pat.pay.domain.PayOrderParam;
 import com.youngch.pat.pay.exception.PayMethodNotSupportException;
 import com.youngch.pat.pay.service.PayService;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -28,6 +29,7 @@ public class PaymentController {
     @Autowired
     private PayService payService;
 
+    @ApiOperation(value = "支付统一下单接口", httpMethod = "POST")
     @RequestMapping(method = RequestMethod.POST)
     public ResponseEntity onPayment(HttpServletRequest request,
                                     @RequestBody PayOrderParam payOrderParam) {

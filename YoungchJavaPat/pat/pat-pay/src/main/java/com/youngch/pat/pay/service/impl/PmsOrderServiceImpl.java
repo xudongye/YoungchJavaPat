@@ -5,11 +5,13 @@ import com.youngch.pat.model.PmsOrder;
 import com.youngch.pat.model.PmsOrderExample;
 import com.youngch.pat.pay.constant.PayConstant;
 import com.youngch.pat.pay.dao.PmsOrderDao;
+import com.youngch.pat.pay.domain.PmsOrderParam;
 import com.youngch.pat.pay.exception.PmsOrderNotFoundException;
 import com.youngch.pat.pay.service.PmsOrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -24,6 +26,19 @@ public class PmsOrderServiceImpl implements PmsOrderService {
 
     @Autowired
     private PmsOrderDao pmsOrderDao;
+
+    @Override
+    public PmsOrder create(PmsOrderParam pmsOrderParam) {
+        PmsOrder pmsOrder = new PmsOrder();
+        pmsOrder.setHotelId(pmsOrderParam.getHotelId());
+        pmsOrder.setOccupationId(pmsOrderParam.getOccupationId());
+        pmsOrder.setOrderId(pmsOrderParam.getOrderId());
+        pmsOrder.setPayStatus(PayConstant.PayStatus.Created.getCode());
+        pmsOrder.setCreateTime(new Date());
+        pmsOrder.setTotalFee(pmsOrderParam.getTotalFee());
+        pmsOrderMapper.insert(pmsOrder);
+        return pmsOrder;
+    }
 
     @Override
     public PmsOrder getByOrderId(String orderId) {

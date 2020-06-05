@@ -2,12 +2,15 @@ package com.youngch.pat.pay.service;
 
 import com.youngch.pat.model.PmsOrder;
 import com.youngch.pat.pay.constant.PayConstant;
+import com.youngch.pat.pay.domain.PmsOrderParam;
 
 /**
  * @author: yexudong
  * @Date: 2020/6/2 16:20
  */
 public interface PmsOrderService {
+
+    PmsOrder create(PmsOrderParam pmsOrderParam);
 
     PmsOrder getByOrderId(String orderId);
 

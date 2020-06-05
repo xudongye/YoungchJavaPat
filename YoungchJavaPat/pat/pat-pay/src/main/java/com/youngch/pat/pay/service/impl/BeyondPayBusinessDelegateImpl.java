@@ -9,6 +9,7 @@ import com.youngch.pat.pay.domain.AliPayConfig;
 import com.youngch.pat.pay.domain.PayOrderParam;
 import com.youngch.pat.pay.domain.WxPayConfig;
 import com.youngch.pat.pay.exception.PayOrderNotFoundException;
+import com.youngch.pat.pay.exception.PmsOrderNotFoundException;
 import com.youngch.pat.pay.exception.UnsetAliPayConfigException;
 import com.youngch.pat.pay.service.PayBusinessDelegate;
 import com.youngch.pat.pay.service.PayConfigService;
@@ -50,12 +51,12 @@ public class BeyondPayBusinessDelegateImpl implements PayBusinessDelegate {
     }
 
     @Override
-    public AliPayConfig getAliConfig(String outTradeNo) {
-        PayOrder payOrder = payOrderService.getByOutTradeNo(outTradeNo);
-        if (payOrder == null) {
-            throw new PayOrderNotFoundException();
+    public AliPayConfig getAliConfig(String orderId) {
+        PmsOrder pmsOrder = pmsOrderService.getByOrderId(orderId);
+        if (pmsOrder == null) {
+            throw new PmsOrderNotFoundException();
         }
-        PayConfig payConfig = payConfigService.getByHotelId(payOrder.getHotelId(), PayConstant.PayType.AliPay.getCode());
+        PayConfig payConfig = payConfigService.getByHotelId(pmsOrder.getHotelId(), PayConstant.PayType.AliPay.getCode());
         if (payConfig == null) {
             throw new UnsetAliPayConfigException();
         }
